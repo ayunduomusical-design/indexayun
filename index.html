@@ -118,7 +118,9 @@
     .ci-list { display:flex; flex-direction:column; gap:1.4rem; }
     .ci-item { display:flex; flex-direction:column; gap:.18rem; }
     .ci-l { font-size:.57rem; letter-spacing:.32em; text-transform:uppercase; color:var(--gold); opacity:.52; }
-    .ci-v { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--off-white); }
+    .ci-v { font-family:'Cormorant Garamond',serif; font-size:1.1rem; color:var(--off-white); text-decoration:none; transition:color .3s; }
+    a.ci-v { cursor:pointer; }
+    a.ci-v:hover { color:var(--gold); }
     .form { display:flex; flex-direction:column; gap:1.25rem; }
     .fg { display:flex; flex-direction:column; gap:.48rem; }
     .fg label { font-size:.6rem; letter-spacing:.25em; text-transform:uppercase; color:rgba(240,236,228,.34); }
@@ -325,6 +327,36 @@
         <span class="rep-a">Elvis Presley</span>
         <div class="rep-tags"><span class="rep-tag">Clásico eterno</span><span class="rep-tag">Cinematográfico</span></div>
       </div>
+      <div class="rep-card">
+        <div class="rep-n">16</div>
+        <div class="rep-t">Holding Back the Years</div>
+        <span class="rep-a">Simply Red</span>
+        <div class="rep-tags"><span class="rep-tag">Soul melancólico</span><span class="rep-tag">Introspección</span></div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-n">17</div>
+        <div class="rep-t">Careless Whisper</div>
+        <span class="rep-a">George Michael</span>
+        <div class="rep-tags"><span class="rep-tag">Sensualidad ochentera</span><span class="rep-tag">Culpa y deseo</span></div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-n">18</div>
+        <div class="rep-t">Let It Be</div>
+        <span class="rep-a">The Beatles</span>
+        <div class="rep-tags"><span class="rep-tag">Himno atemporal</span><span class="rep-tag">Calma y consuelo</span></div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-n">19</div>
+        <div class="rep-t">Nutshell</div>
+        <span class="rep-a">Alice in Chains</span>
+        <div class="rep-tags"><span class="rep-tag">Oscuridad acústica</span><span class="rep-tag">Vulnerabilidad cruda</span></div>
+      </div>
+      <div class="rep-card">
+        <div class="rep-n">20</div>
+        <div class="rep-t">Yellow Ledbetter</div>
+        <span class="rep-a">Pearl Jam</span>
+        <div class="rep-tags"><span class="rep-tag">Grunge etéreo</span><span class="rep-tag">Textura difusa</span></div>
+      </div>
     </div>
     <p class="rep-foot">Música para escuchar cerca — matrimonios, cafés concert, ceremonias,<br>terrazas, noches largas y momentos que merecen quedarse suspendidos un rato más.</p>
   </div>
@@ -380,9 +412,9 @@
       <div class="gold-rule"></div>
       <p class="contact-desc">¿Buscas música en vivo para tu bar, restaurante o evento? Cuéntanos de tu espacio y encontramos la propuesta perfecta.</p>
       <div class="ci-list">
-        <div class="ci-item"><span class="ci-l">Instagram</span><span class="ci-v">@ayunduo</span></div>
-        <div class="ci-item"><span class="ci-l">WhatsApp</span><span class="ci-v">+56963469940</span></div>
-        <div class="ci-item"><span class="ci-l">Email</span><span class="ci-v">ayunduomusical@gmail.com</span></div>
+        <div class="ci-item"><span class="ci-l">Instagram</span><a class="ci-v" href="https://www.instagram.com/ayun_duo" target="_blank" rel="noopener">@ayun_duo</a></div>
+        <div class="ci-item"><span class="ci-l">WhatsApp</span><a class="ci-v" href="https://wa.me/56963469940" target="_blank" rel="noopener">+56963469940</a></div>
+        <div class="ci-item"><span class="ci-l">Email</span><a class="ci-v" href="mailto:ayunduomusical@gmail.com">ayunduomusical@gmail.com</a></div>
       </div>
     </div>
     <div class="form">
