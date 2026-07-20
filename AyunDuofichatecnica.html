@@ -73,10 +73,15 @@
   }
   @media (max-width: 768px) {
     .download-pdf-btn {
-      left: 50%;
+      position: static;
+      display: flex;
+      width: fit-content;
+      margin: 26px auto 50px;
+      left: auto;
       right: auto;
-      bottom: auto; /* top se define dinámicamente por JS, justo bajo la ficha */
-      transform: translateX(-50%);
+      bottom: auto;
+      top: auto;
+      transform: none;
       padding: 15px 30px;
       font-size: 13px;
       letter-spacing: .14em;
@@ -270,11 +275,57 @@
     text-transform: uppercase;
   }
   footer .foot-gold { color: var(--gold); }
+
+  /* ===== VERSIÓN MÓVIL: layout responsivo real, sin depender del escalado de la hoja A4 ===== */
+  @media (max-width: 768px) {
+    html, body { height: auto; min-height: 100%; }
+    body {
+      display: block;
+      overflow-x: hidden;
+      overflow-y: auto;
+    }
+    .page {
+      width: 100%;
+      height: auto;
+      min-height: 100vh;
+      padding: 26px 20px 40px;
+      box-shadow: none;
+    }
+    header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 14px;
+      padding-bottom: 18px;
+      margin-bottom: 18px;
+    }
+    h1 { font-size: 34px; }
+    .doc-tag { text-align: left; line-height: 1.7; }
+    .intro { font-size: 15px; margin-bottom: 22px; max-width: 100%; }
+
+    .grid {
+      grid-template-columns: 1fr;
+      gap: 30px;
+    }
+    .spec-list li { font-size: 13px; padding: 10px 0; }
+    .spec-k { font-size: 10px; }
+    .spec-v small { font-size: 11px; }
+
+    .rep-list-wrap { column-count: 1; }
+    .rep-title { font-size: 14px; }
+    .rep-meta { font-size: 12px; }
+    .rep-num { font-size: 11px; }
+
+    .side-card { height: auto; padding: 20px; }
+    .side-card .duo-text { font-size: 14px; }
+    .quote-box { font-size: 16px; }
+    .contact-list li { font-size: 13px; }
+    .contact-list .ci-l { font-size: 10px; }
+
+    footer { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 10px; }
+  }
 </style>
 </head>
 <body>
-
-<button class="download-pdf-btn" id="downloadPdfBtn" type="button">&#8681; Descargar como PDF</button>
 
 <div class="page" id="page">
 <div class="grain"></div>
@@ -381,28 +432,28 @@
 
 </div>
 
+<button class="download-pdf-btn" id="downloadPdfBtn" type="button">&#8681; Descargar como PDF</button>
+
 <script>
   function fitPage() {
     var page = document.getElementById('page');
-    var btn = document.getElementById('downloadPdfBtn');
-    page.style.transform = '';
-    var naturalW = page.offsetWidth;
-    var naturalH = page.offsetHeight;
-    var margin = 24;
-    var scale = Math.min(
-      (window.innerWidth - margin) / naturalW,
-      (window.innerHeight - margin) / naturalH
-    );
-    scale = Math.min(scale, 1.4);
-    page.style.transform = 'scale(' + scale + ')';
+    var isMobile = window.innerWidth <= 768;
 
-    if (window.innerWidth <= 768) {
-      // En móvil: ubicar el botón justo debajo del final visible de la ficha técnica
-      var rect = page.getBoundingClientRect();
-      btn.style.top = (rect.bottom + 16) + 'px';
+    if (isMobile) {
+      // En móvil: la ficha fluye a ancho completo (responsive), sin transform-scale
+      page.style.transform = 'none';
     } else {
-      // En escritorio: restaurar posición fija original (abajo a la derecha)
-      btn.style.top = '';
+      // En escritorio: comportamiento original (hoja A4 escalada para caber en pantalla)
+      page.style.transform = '';
+      var naturalW = page.offsetWidth;
+      var naturalH = page.offsetHeight;
+      var margin = 24;
+      var scale = Math.min(
+        (window.innerWidth - margin) / naturalW,
+        (window.innerHeight - margin) / naturalH
+      );
+      scale = Math.min(scale, 1.4);
+      page.style.transform = 'scale(' + scale + ')';
     }
   }
   window.addEventListener('load', fitPage);
