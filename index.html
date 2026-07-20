@@ -157,8 +157,34 @@
       footer{flex-direction:column;gap:1.2rem;text-align:center;}
       .rep-top{flex-direction:column;align-items:flex-start;gap:1rem;}
     }
+    /* NAV TOGGLE (hamburguesa) */
+    .nav-toggle {
+      display:none; flex-direction:column; justify-content:center; gap:5px;
+      width:32px; height:32px; background:none; border:none; cursor:pointer; z-index:200;
+    }
+    .nav-toggle span { display:block; width:100%; height:1px; background:var(--off-white); transition:transform .3s, opacity .3s; }
+    .nav-toggle.open span:nth-child(1){ transform:translateY(6px) rotate(45deg); }
+    .nav-toggle.open span:nth-child(2){ opacity:0; }
+    .nav-toggle.open span:nth-child(3){ transform:translateY(-6px) rotate(-45deg); }
+
+    .nav-overlay {
+      position:fixed; inset:0; background:rgba(0,0,0,.5); opacity:0; visibility:hidden;
+      transition:opacity .35s ease; z-index:90;
+    }
+    .nav-overlay.open { opacity:1; visibility:visible; }
+
     @media(max-width:600px){
-      .nav-links{display:none;}
+      .nav-toggle{ display:flex; }
+      .nav-links{
+        display:flex; flex-direction:column; align-items:flex-start; gap:2rem;
+        position:fixed; top:0; right:-85%; width:80%; max-width:320px; height:100vh;
+        background:rgba(14,12,12,.98); backdrop-filter:blur(12px);
+        border-left:1px solid rgba(201,169,110,.15);
+        padding:6.5rem 2.2rem 2rem; z-index:150;
+        transition:right .4s ease;
+      }
+      .nav-links.open{ right:0; }
+      .nav-links a{ font-size:.72rem; }
       .about,.rep,.servicios,.contact{padding:5rem 1.4rem;}
     }
   </style>
@@ -168,7 +194,7 @@
 <!-- NAV -->
 <nav id="nav">
   <a href="#inicio" class="logo">Ayün Dúo</a>
-  <ul class="nav-links">
+  <ul class="nav-links" id="navLinks">
     <li><a href="#nosotros">Nosotros</a></li>
     <li><a href="#repertorio">Repertorio</a></li>
     <li><a href="#servicios">Servicios</a></li>
@@ -176,7 +202,11 @@
     <li><a href="https://ayunduorecordstation.vercel.app/" target="_blank" rel="noopener">Estación de grabación</a></li>
     <li><a href="#contacto" class="nav-cta">Contratar</a></li>
   </ul>
+  <button class="nav-toggle" id="navToggle" aria-label="Abrir menú" aria-expanded="false">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+<div class="nav-overlay" id="navOverlay"></div>
 
 <!-- HERO -->
 <section class="hero" id="inicio">
@@ -556,6 +586,31 @@
   document.getElementById('audio-close').addEventListener('click', function() {
     audio.pause();
     player.style.display = 'none';
+  });
+
+  // Menú móvil (hamburguesa)
+  var navToggle = document.getElementById('navToggle');
+  var navLinks = document.getElementById('navLinks');
+  var navOverlay = document.getElementById('navOverlay');
+
+  function closeMenu() {
+    navToggle.classList.remove('open');
+    navLinks.classList.remove('open');
+    navOverlay.classList.remove('open');
+    navToggle.setAttribute('aria-expanded', 'false');
+  }
+
+  navToggle.addEventListener('click', function() {
+    var isOpen = navLinks.classList.toggle('open');
+    navToggle.classList.toggle('open', isOpen);
+    navOverlay.classList.toggle('open', isOpen);
+    navToggle.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+  });
+
+  navOverlay.addEventListener('click', closeMenu);
+
+  navLinks.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', closeMenu);
   });
 </script>
 
