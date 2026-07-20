@@ -71,6 +71,9 @@
     color: var(--dark);
     border-color: var(--gold);
   }
+  .download-pdf-btn-top {
+    display: none;
+  }
   @media (max-width: 768px) {
     .download-pdf-btn {
       position: static;
@@ -322,6 +325,27 @@
     .contact-list .ci-l { font-size: 10px; }
 
     footer { flex-direction: column; align-items: flex-start; gap: 6px; font-size: 10px; }
+
+    /* Segundo botón de descarga, arriba a la derecha, junto al título */
+    .download-pdf-btn-top {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      position: absolute;
+      top: 0;
+      right: 0;
+      background: var(--dark-2);
+      color: var(--gold-2);
+      border: 1px solid rgba(201,169,110,.45);
+      border-radius: 30px;
+      padding: 9px 16px;
+      font-family: 'Raleway', sans-serif;
+      font-size: 10px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      box-shadow: 0 4px 18px rgba(0,0,0,.45);
+    }
   }
 </style>
 </head>
@@ -340,6 +364,7 @@
     <strong>Voz &amp; Guitarra Acústica</strong><br>
     Santiago, Chile
   </div>
+  <button class="download-pdf-btn-top" id="downloadPdfBtnTop" type="button">&#8681; PDF</button>
 </header>
 
 <p class="intro">Interpretaciones íntimas de canciones que todos conocen — arreglos propios pensados para elevar el ambiente sin dominar la conversación. Sonido cálido, presencia cinematográfica, cero complicaciones técnicas.</p>
@@ -459,14 +484,17 @@
   window.addEventListener('load', fitPage);
   window.addEventListener('resize', fitPage);
 
-  document.getElementById('downloadPdfBtn').addEventListener('click', function () {
+  function downloadPdf() {
     var link = document.createElement('a');
     link.href = 'fichatecnica.pdf';
     link.download = 'fichatecnica.pdf';
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-  });
+  }
+  document.getElementById('downloadPdfBtn').addEventListener('click', downloadPdf);
+  var topBtn = document.getElementById('downloadPdfBtnTop');
+  if (topBtn) topBtn.addEventListener('click', downloadPdf);
 </script>
 
 </body>
