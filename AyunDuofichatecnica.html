@@ -70,6 +70,18 @@
     color: var(--dark);
     border-color: var(--gold);
   }
+  @media (max-width: 768px) {
+    .download-pdf-btn {
+      left: 50%;
+      right: auto;
+      bottom: auto; /* top se define dinámicamente por JS, justo bajo la ficha */
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      font-size: 13px;
+      letter-spacing: .14em;
+      border-radius: 34px;
+    }
+  }
   .grain {
     position:absolute; inset:0; pointer-events:none; opacity:.5;
     background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='.05'/%3E%3C/svg%3E");
@@ -371,6 +383,7 @@
 <script>
   function fitPage() {
     var page = document.getElementById('page');
+    var btn = document.getElementById('downloadPdfBtn');
     page.style.transform = '';
     var naturalW = page.offsetWidth;
     var naturalH = page.offsetHeight;
@@ -381,6 +394,15 @@
     );
     scale = Math.min(scale, 1.4);
     page.style.transform = 'scale(' + scale + ')';
+
+    if (window.innerWidth <= 768) {
+      // En móvil: ubicar el botón justo debajo del final visible de la ficha técnica
+      var rect = page.getBoundingClientRect();
+      btn.style.top = (rect.bottom + 16) + 'px';
+    } else {
+      // En escritorio: restaurar posición fija original (abajo a la derecha)
+      btn.style.top = '';
+    }
   }
   window.addEventListener('load', fitPage);
   window.addEventListener('resize', fitPage);
